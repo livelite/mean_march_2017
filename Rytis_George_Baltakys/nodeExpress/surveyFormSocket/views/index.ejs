@@ -1,0 +1,62 @@
+<html>
+<head>
+<title></title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type ="text/javascript">
+		$(document).ready(function (){
+			// this triggers the connection event in our server!
+			var socket = io.connect()
+			$('button').click(function (){
+				socket.emit("button_clicked", {
+					name: $('input[name=name').val(),
+					dojo: $('select[name=dojo').val(),
+					language: $('select[name=language').val(),
+					comment: $('textarea[name=comment').val(),
+				});
+			});
+			socket.on('server_response', function (data){
+				$('button').after(`<p>Name: ${data.name}</p><p>Dojo: ${data.dojo}</p><p>${data.language}</p><p>Comment: ${data.comment}</p><p>Lucky number: ${data.number}`)
+			});
+		})
+	</script>
+</head>
+<body>
+	<label>
+		Your Name: <input type="text" name="name">
+	</label>
+	<div>
+		<label>
+			Dojo Location:
+			<select name="dojo">
+				<option value="San Jose">San Jose</option>
+				<option value="Washington DC">Washington DC</option>
+				<option value="Seattle">Seattle</option>
+				<option value="Chicago">Chicago</option>
+				<option value="Dallas">Dallas</option>
+				<option value="Berkely">Berkely</option>
+				<option value="Orange County">Orange County</option>
+			</select>
+		</label>
+	</div>
+	<div>
+		<label>
+			Favorite language:
+			<select name="language">
+				<option value="Python">Python</option>
+				<option value="JavaScript">JavaScript</option>
+				<option value="Ruby">Ruby</option>
+				<option value="Java">Java</option>
+				<option value="PHP">PHP</option>
+			</select>
+		</label>
+	</div>
+	<label>
+		Comment (optional)
+		<div>
+			<textarea name="comment" rows="5" cols="50"></textarea>
+		</div>
+	</label>
+	<button type="submit">Submit</button>
+</body>
+</html>
