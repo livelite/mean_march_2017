@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Group Chat</title>
+	<style>
+		#chatWindow {
+			height: 400px;
+			width: 70%;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.connectedUsers {
+			width: 20%;
+			display: inline-block;
+			vertical-align: top;
+		}
+		#userList {
+			display: inline-block;
+			vertical-align: top;
+			list-style: none;
+		}
+		input {
+			width: 70%
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type ="text/javascript">
+		$(document).ready(function (){
+			// this triggers the connection event in our server!
+			var socket = io.connect()
+			$('form').submit(function (){
+				socket.emit("new_message", {
+
+				})
+				return false
+			})
+			socket.on('server_response', function (data){
+				$('#counter').text(data.count)
+			})
+		})
+	</script>
+</head>
+<body>
+	<div>
+		<div id='chatWindow'></div>
+		<div class='connectedUsers'>
+			<div id='connectedUsers'>Connected users</div>
+			<ul id='userList'>
+				<li>User</li>
+				<li>user</li>
+			</ul>
+		</div>
+	</div>
+	<form>
+		<label>Message: <input type="text" name="message"><button>Send</button></label>
+	</form>
+</body>
+</html>
