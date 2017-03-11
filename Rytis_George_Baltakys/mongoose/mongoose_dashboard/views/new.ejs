@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mongoose Dashboard</title>
+</head>
+<body>
+	<div>
+		<h1>New Mongoose</h1>
+		<% if(typeof(errors) != 'undefined' ) { %>
+			<% for (var x in errors) { %>
+				<h3><%= errors[x].message %></h3>
+			<% } %>
+		<% } %>
+		<form action="/mongooses" method="POST">
+			<div>
+				<label>
+					Name: <input type="text" name="name">
+				</label>
+			</div>
+			<div>
+				<label>
+					Age: <input type="number" name="age">
+				</label>
+			</div>
+			<div>
+				<label>
+					Favourite meal: <input type="text" name="meal">
+				</label>
+			</div>
+			<button>Add</button>
+		</form>
+	</div>
+</body>
+</html>

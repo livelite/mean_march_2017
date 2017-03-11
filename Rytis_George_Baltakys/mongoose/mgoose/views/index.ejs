@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mongoose Test</title>
+</head>
+<body>
+    <div>
+        <h1>User Form</h1>
+        <% if(typeof(errors) != 'undefined' ) { %>
+            <% for (var x in errors) { %>
+                <h3><%= errors[x].message %></h3>
+            <% } %>
+        <% } %>
+        <form action="/users" method="POST">
+            <p>Name:</p>
+            <input type="text" name="name">
+            <p>Age:</p>
+            <input type="number" name="age">
+            <input type="submit" name="Submit">
+        </form>
+    </div>
+    <div>
+        <h1>Current Users</h1>
+        <% users.forEach(function(user) { %>
+            <p>Name: <%= user.name %> Age: <%= user.age %></p>
+        <% }); %>
+    </div>
+</body>
+</html>

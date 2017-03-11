@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mongoose Dashboard</title>
+</head>
+<body>
+	<div>
+		<h1>Mongooses</h1>
+		<% mongoose_critters.forEach(function(mongoose_critter) { %>
+			Name: <%= mongoose_critter.name %>
+			<ul>
+				<li>Age: <%= mongoose_critter.age %></li>
+				<li>Favourite meal: <%= mongoose_critter.meal %></li>
+				<li><a href='/mongooses/edit/<%= mongoose_critter._id %>'>Edit</a> / <a href='/mongooses/destroy/<%= mongoose_critter._id %>'>Remove</a></li>
+			</ul>
+		<% }); %>
+		<div>
+			<a href='/mongooses/new'>Add a new mongoose</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mongoose Dashboard</title>
+</head>
+<body>
+	<div>
+		<h1>New Mongoose</h1>
+		<% if(typeof(errors) != 'undefined' ) { %>
+			<% for (var x in errors) { %>
+				<h3><%= errors[x].message %></h3>
+			<% } %>
+		<% } %>
+		<form action="/mongooses/<%= mongoose_critter._id %>" method="POST">
+			<div>
+				<label>
+					Name: <input type="text" name="name" value='<%= mongoose_critter.name %>'>
+				</label>
+			</div>
+			<div>
+				<label>
+					Age: <input type="number" name="age" value='<%= mongoose_critter.age %>'>
+				</label>
+			</div>
+			<div>
+				<label>
+					Favourite meal: <input type="text" name="meal" value='<%= mongoose_critter.meal %>'>
+				</label>
+			</div>
+			<button>Update</button>
+		</form>
+	</div>
+</body>
+</html>
