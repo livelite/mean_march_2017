@@ -4,24 +4,13 @@ var app = express()
 var bodyParser = require('body-parser')
 var mongoose = require("mongoose")
 
-mongoose.connect('mongodb://localhost/quoting_dojo')
-// Use native promises to solve mongoose deprication problem
-mongoose.Promise = global.Promise;
-
-var QuoteSchema = new mongoose.Schema({
-	name: String,
-	quote: String,
-	likes: Number
-}, {timestamps: true})
-
-mongoose.model("Quote", QuoteSchema);
-var Quote = mongoose.model("Quote")
-
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, "./static")))
+app.use(express.static(path.join(__dirname, './client/static')))
 
-app.set('views', path.join(__dirname, './views'));
+app.set('views', path.join(__dirname, './client/views'));
 app.set('view engine', 'ejs')
+
+require('./server/config/mongoose.js')
 
 var routes_setter = require('./server/config/routes.js')
 routes_setter(app)
