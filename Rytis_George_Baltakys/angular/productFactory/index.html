@@ -8,12 +8,12 @@
 	<script>
 	var app = angular.module('app', [])
 
-	app.factory('userFactory', function(){
+	app.factory('ProdutFactory', function(){
 		var factory = {}
 		var users = [
-			{firstName: 'Rytis', lastName: 'Vakaras', favLang: 'JavaScript'},
-			{firstName: 'Eleanor', lastName: 'Vakaras', favLang: 'English'},
-			{firstName: 'Ruta', lastName: 'Diena', favLang: 'Lietuviu'}	
+			{name: 'Mouse', price: 7.95},
+			{name: 'Keyboard', price: 12.99},
+			{name: '3 Tennis Balls', price: 2.99}
 		]
 
 		factory.getUsers = function(callback){
@@ -33,7 +33,7 @@
 		return factory
 	})
 
-	app.controller('userController', ['userFactory', function(userFactory){
+	app.controller('userController', ['UserFactory', function(UserFactory){
 		var self = this
 
 		function setUsers(users) {
@@ -42,19 +42,19 @@
 		}
 
 		self.getUsers = function() {
-			userFactory.getUsers(setUsers)
+			UserFactory.getUsers(setUsers)
 		}
 
 		self.getUsers()
 
 		self.addUser = function(newUser){
-			userFactory.addUser(newUser, setUsers)
+			UserFactory.addUser(newUser, setUsers)
 			self.newUser = {}
 		}
 		self.destroy = function(index){
-			userFactory.destroy(index, setUsers)
+			UserFactory.destroy(index, setUsers)
 		}
-	}]);
+	}])
 	</script>
 </head>
 <body ng-controller="userController as uc">
@@ -71,8 +71,8 @@
 		<button ng-click="uc.addUser(uc.newUser)">Create User</button>
 	</form>
 	<p ng-if="uc.newUser.firstName">Currently adding: {{ uc.newUser.firstName }}</p>
+	<input type="text" ng-model="uc.userFilter">
 	<div>
-		Filer: <input type="text" ng-model="uc.userFilter">
 		<ul>
 			<li ng-repeat="user in uc.users | filter: uc.userFilter">{{ user.firstName }} {{ user.lastName }} {{ user.favLang }} <button ng-click="uc.destroy($index)">delete</button></li>
 		</ul>
