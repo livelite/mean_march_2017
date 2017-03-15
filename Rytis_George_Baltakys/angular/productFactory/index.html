@@ -8,74 +8,84 @@
 	<script>
 	var app = angular.module('app', [])
 
-	app.factory('ProdutFactory', function(){
+	app.factory('productFactory', function(){
 		var factory = {}
-		var users = [
+		var products = [
 			{name: 'Mouse', price: 7.95},
 			{name: 'Keyboard', price: 12.99},
 			{name: '3 Tennis Balls', price: 2.99}
 		]
 
-		factory.getUsers = function(callback){
-			callback(users)
+		factory.getProducts = function(callback){
+			callback(products)
 		}
 
-		factory.addUser = function(newUser, callback){
-			users.push(newUser)
-			callback(users)
+		factory.addProduct = function(newProduct, callback){
+			products.push(newProduct)
+			callback(products)
 		}
 
-		factory.destroy = function(index, callback){
-			users.splice(index, 1)
-			callback(users)
+		factory.destroyProduct = function(index, callback){
+			products.splice(index, 1)
+			callback(products)
 		}
 
 		return factory
 	})
 
-	app.controller('userController', ['UserFactory', function(UserFactory){
+	app.controller('productController', ['productFactory', function(productFactory){
 		var self = this
 
-		function setUsers(users) {
-			self.users = users;
-			self.newUser = {}
+		function setProducts(products) {
+			self.products = products;
+			self.newProduct = {}
 		}
 
-		self.getUsers = function() {
-			UserFactory.getUsers(setUsers)
+		self.getProducts = function() {
+			productFactory.getProducts(setProducts)
 		}
 
-		self.getUsers()
+		self.getProducts()
 
-		self.addUser = function(newUser){
-			UserFactory.addUser(newUser, setUsers)
-			self.newUser = {}
+		self.addProduct = function(newProduct){
+			productFactory.addProduct(newProduct, setProducts)
+			self.newProduct = {}
 		}
-		self.destroy = function(index){
-			UserFactory.destroy(index, setUsers)
+		self.destroyProduct = function(index){
+			productFactory.destroyProduct(index, setProducts)
 		}
 	}])
 	</script>
 </head>
-<body ng-controller="userController as uc">
+<body ng-controller="productController as pc">
 	<form>
-		<label>
-			First Name <input type="text" ng-model="uc.newUser.firstName">
-		</label>
-		<label>
-			Last Name <input type="text" ng-model="uc.newUser.lastName">
-		</label>
-		<label>
-			Favorite Language <input type="text" ng-model="uc.newUser.favLang">
-		</label>
-		<button ng-click="uc.addUser(uc.newUser)">Create User</button>
+		<div>
+			<label>
+				Product Name: <input type="text" ng-model="pc.newProduct.name">
+			</label>
+		</div>
+		<div>
+			<label>
+				Product Price: $<input type="text" ng-model="pc.newProduct.price">
+			</label>
+		</div>
+		<button ng-click="pc.addProduct(pc.newProduct)">Add Product</button>
 	</form>
-	<p ng-if="uc.newUser.firstName">Currently adding: {{ uc.newUser.firstName }}</p>
-	<input type="text" ng-model="uc.userFilter">
+	<p ng-if="pc.newProduct.name">Currently adding: {{ pc.newProduct.name }}</p>
+	<input type="text" ng-model="pc.productFilter">
 	<div>
-		<ul>
-			<li ng-repeat="user in uc.users | filter: uc.userFilter">{{ user.firstName }} {{ user.lastName }} {{ user.favLang }} <button ng-click="uc.destroy($index)">delete</button></li>
-		</ul>
+		<table ng-if="pc.products.length > 0">
+			<thead>
+				<tr>
+					<th>Name</th><th>Price</th><th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="product in pc.products | filter: pc.productFilter">
+					<td>{{ product.name }}</td><td>${{ product.price }}</td><td><button ng-click="pc.destroyProduct($index)">delete</button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>
