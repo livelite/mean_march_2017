@@ -22,12 +22,12 @@
 
 		factory.addProduct = function(newProduct, callback){
 			products.push(newProduct)
-			callback(products)
+			callback()
 		}
 
-		factory.destroyProduct = function(index, callback){
-			products.splice(index, 1)
-			callback(products)
+		factory.destroyProduct = function(product, callback){
+			products.splice(products.indexOf(product), 1)
+			callback()
 		}
 
 		return factory
@@ -36,24 +36,22 @@
 	app.controller('productController', ['productFactory', function(productFactory){
 		var self = this
 
-		function setProducts(products) {
-			self.products = products;
-			self.newProduct = {}
+		self.getProducts = function() {
+			productFactory.getProducts(function(products){
+				self.products = products
+				self.newProduct = {}
+			})
 		}
 
-		self.getProducts = function() {
-			productFactory.getProducts(setProducts)
+		self.addProduct = function(newProduct){
+			productFactory.addProduct(newProduct, self.getProducts)
+		}
+		
+		self.destroyProduct = function(product){
+			productFactory.destroyProduct(product, self.getProducts)
 		}
 
 		self.getProducts()
-
-		self.addProduct = function(newProduct){
-			productFactory.addProduct(newProduct, setProducts)
-			self.newProduct = {}
-		}
-		self.destroyProduct = function(index){
-			productFactory.destroyProduct(index, setProducts)
-		}
 	}])
 	</script>
 </head>
@@ -66,7 +64,7 @@
 		</div>
 		<div>
 			<label>
-				Product Price: $<input type="text" ng-model="pc.newProduct.price">
+				Product Price: $<input type="number" ng-model="pc.newProduct.price">
 			</label>
 		</div>
 		<button ng-click="pc.addProduct(pc.newProduct)">Add Product</button>
@@ -82,7 +80,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="product in pc.products | filter: pc.productFilter">
-					<td>{{ product.name }}</td><td>${{ product.price }}</td><td><button ng-click="pc.destroyProduct($index)">delete</button></td>
+					<td>{{ product.name }}</td><td>${{ product.price }}</td><td><button ng-click="pc.destroyProduct(product)">delete</button></td>
 				</tr>
 			</tbody>
 		</table>
