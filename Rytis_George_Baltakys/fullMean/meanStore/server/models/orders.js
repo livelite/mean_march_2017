@@ -5,7 +5,8 @@ var OrderSchema = mongoose.Schema({
 		product: {type: mongoose.Schema.Types.ObjectId, ref:'Product'},
 		quantity: {
 			type: Number,
-			required: true
+			required: true,
+			min: 0
 		}
 	}],
 	_user: { type: mongoose.Schema.Types.ObjectId, ref:'User' }

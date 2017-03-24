@@ -6,7 +6,7 @@
 	<form ng-submit="OC.create(OC.newOrder)">
 		<label>Customer:
 			<select ng-model="OC.newOrder.user" ng-init="UC.index()">
-				<option ng-repeat="user in UC.users | orderBy:'name'" value="{{ user._id }}">{{ user.name }}</option>
+				<option ng-repeat="user in UC.users | orderBy:name" value="{{ user._id }}">{{ user.name }}</option>
 			</select>
 		</label>
 		<label>Order:
@@ -15,7 +15,7 @@
 			</select>
 			<span ng-controller='ProductsController as PC'>
 				<select ng-model="OC.newOrder.product" ng-init="PC.index()">
-					<option ng-repeat="product in PC.products | orderBy:'name'" value="{{ product._id }}">{{ product.name }}</option>
+					<option ng-repeat="product in PC.products | orderBy:name" value="{{ product._id }}">{{ product.name }}</option>
 				</select>
 			</span>
 		</label>

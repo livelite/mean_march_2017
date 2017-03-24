@@ -5,6 +5,10 @@ app.factory('OrderFactory', function($http){
 		$http.get('/orders').then(callback)
 	}
 
+	factory.indexLimit = function(callback){
+		$http.get('/orders/5').then(callback)
+	}
+
 	factory.create = function(newOrder, callback){
 		$http.post('/orders', newOrder).then(callback)
 	}

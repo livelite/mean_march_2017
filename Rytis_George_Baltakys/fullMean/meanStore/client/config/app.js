@@ -4,7 +4,7 @@ app.config(function($routeProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl: 'partials/dashboard.html',
-		controller: 'ProductsController as PC'
+		controller: 'DashboardController as DC'
 	})
 	.when('/products', {
 		templateUrl: 'partials/products.html',
@@ -18,4 +18,9 @@ app.config(function($routeProvider) {
 		templateUrl: 'partials/orders.html',
 		controller: 'OrdersController as OC'
 	})
+	.when('/settings', {
+		templateUrl: 'partials/settings.html',
+		controller: 'UsersController as UC'
+	})
+
 })

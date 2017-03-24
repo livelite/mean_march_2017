@@ -5,7 +5,7 @@
 	<p>
 		<input type="text" ng-model="user_filter" placeholder="filter...">
 		<ul ng-init="UC.index()">
-			<li ng-repeat="user in UC.users | filter: user_filter | orderBy:'name'">{{ user.name }} - {{ user.createdAt | date:"M/dd/yyyy 'at' h:mma" }} <a href="" ng-click="UC.delete(user._id)">remove</a></li>
+			<li ng-repeat="user in UC.users | filter: user_filter | orderBy:'name'">{{ user.name }} - added on: {{ user.createdAt | date:"M/dd/yyyy 'at' h:mma" }} - <span am-time-ago="user.createdAt"></span> <a href="" ng-click="UC.delete(user._id)">remove</a></li>
 		</ul>
 	</p>
 	<p ng-repeat="error in UC.errors">{{error}}</p>
@@ -15,4 +15,7 @@
 		</label>
 		<button>Add</button>
 	</form>
+	<p>
+		<button ng-click="UC.goBack()">Go back</button>
+	</p>
 </div>

@@ -1,4 +1,4 @@
-app.controller('UsersController', function(UserFactory, $moment){
+app.controller('UsersController', function(UserFactory, $moment, $window){
 	var self = this
 
 	self.errors = []
@@ -38,5 +38,9 @@ app.controller('UsersController', function(UserFactory, $moment){
 		UserFactory.delete(id, function(res){
 			self.index()
 		})
+	}
+
+	self.goBack = function(){
+		$window.history.back()
 	}
 })
